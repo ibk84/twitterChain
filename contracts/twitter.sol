@@ -9,9 +9,11 @@ contract Twitter{
         uint256 timestamp;
         uint256 likes;
     }
+    uint112 constant maxTweetLength= 200;
     mapping(address => Tweet[]) public tweets;
 
     function CreateTweet(string memory _content ) public{
+        require(bytes(_content).length <= maxTweetLength, "Tweet  is too long");
         Tweet memory newTweet=Tweet({
             author:msg.sender,
             content:_content,
