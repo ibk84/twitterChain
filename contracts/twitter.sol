@@ -11,16 +11,19 @@ contract Twitter{
     }
     mapping(address => Tweet[]) public tweets;
 
-    function CreateTweet(string memory _tweet) public{
-        Tweet memory newTweet=Tweet{
-            
-        };
-        tweets[msg.sender].push(_tweet);
+    function CreateTweet(string memory _content ) public{
+        Tweet memory newTweet=Tweet({
+            author:msg.sender,
+            content:_content,
+            timestamp:block.timestamp,
+            likes:0
+        });
+        tweets[msg.sender].push(newTweet);
     }
-    function getTweet(address _owner, uint _id)public view returns  (string memory ){
+    function getTweet(address _owner, uint _id)public view returns  (Tweet memory ){
         return tweets[_owner][_id];
     }
-    function getAllTweet(address _owner)public view returns (string[] memory){
+    function getAllTweet(address _owner)public view returns (Tweet[] memory){
         return tweets[_owner];
     }
 }
